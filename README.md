@@ -12,10 +12,10 @@ Name: Dipendra Raut Kurmi
 Roll.No: 18
 Batch: 2021SE
 
-                                                                                   Submitted To:
-                                                                                   Er. Amrit Poudel
-                                                                                  Lecturer at Gandaki College Of         
-                                                                                   Engineering and Science
+Submitted To:
+Er. Amrit Poudel
+Lecturer at Gandaki College Of         
+Engineering and Science
 
 
 Objective:
@@ -29,82 +29,6 @@ Features of UDP:
 - No ordering of packets
 - Fast and low latency
 - Suitable for real-time apps (VoIP, video streaming, online gaming)
-
-Code:
-// UDPServer.java
-import java.net.*;
-public class UDPServer {
-public static void main(String[] args) {
-int port = 9876;
-
-try (DatagramSocket serverSocket = new DatagramSocket(port)) {
-byte[] receiveData = new byte[1024];
-byte[] sendData;
-
-System.out.println("UDP Server started. Listening on port " + port);
-
-while (true) {
-DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-serverSocket.receive(receivePacket);
-
-String sentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
-System.out.println("RECEIVED: " + sentence);
-
-InetAddress clientAddress = receivePacket.getAddress();
-int clientPort = receivePacket.getPort();
-
-String capitalizedSentence = sentence.toUpperCase();
-sendData = capitalizedSentence.getBytes();
-
-DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, clientAddress, clientPort);
-serverSocket.send(sendPacket);
-
-System.out.println("Sent response to client.\n");
-}
-
-} catch (Exception e) {
-System.err.println("Server exception: " + e.getMessage());
-e.printStackTrace();
-}
-}
-}
-
-//UDPClient.java
-import java.net.*;
-import java.io.*;
-
-public class UDPClient {
-public static void main(String[] args) {
-String serverAddress = "127.0.0.1";
-int port = 9876;
-
-try (DatagramSocket clientSocket = new DatagramSocket()) {
-BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in));
-
-byte[] sendData;
-byte[] receiveData = new byte[1024];
-
-System.out.print("Enter message: ");
-String sentence = userInput.readLine();
-
-sendData = sentence.getBytes();
-InetAddress serverIP = InetAddress.getByName(serverAddress);
-
-DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverIP, port);
-clientSocket.send(sendPacket);
-
-DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-clientSocket.receive(receivePacket);
-
-String modifiedSentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
-System.out.println("FROM SERVER: " + modifiedSentence);
-
-} catch (Exception e) {
-System.err.println("Client exception: " + e.getMessage());
-e.printStackTrace();
-}
-}
-}
 
 Result:
 When running the UDPServer.java and UDPClient.java programs:
